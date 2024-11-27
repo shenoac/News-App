@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
+    "moduleResolution": "nodenext",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "rootDir": "./src",
     "outDir": "./dist",
-    "esModuleInterop": true,
-    "moduleResolution": "NodeNext",
     "module": "NodeNext",
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
