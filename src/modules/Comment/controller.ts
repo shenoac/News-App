@@ -8,12 +8,10 @@ const commentRepository = AppDataSource.getRepository(Comment);
 const newsRepository = AppDataSource.getRepository(News);
 
 const commentOnNewsArticle = async (req: Request, res: Response) => {
-  //   Accept a valid newsId and comment content from the user.
   const userId = req.user?.id;
   const { newsId } = req.query;
   const { content, timeStamp } = req.body;
 
-  // Validate the inputs (e.g., ensure newsId exists and comment content is not empty).
   if (!newsId || typeof newsId !== 'string') {
     res.status(400).send({ message: 'Invalid newsId' });
     return;
@@ -53,11 +51,6 @@ const commentOnNewsArticle = async (req: Request, res: Response) => {
       error: err.message,
     });
   }
-
-  // Authenticate the user to ensure only authorized users can add comments.
-  // Save the comment to the database with relevant details such as userId, newsId, comment content, and timestamp.
-  // Return a success message when you add the comment.
-  // Provide appropriate error responses for invalid inputs or authentication failures.
 };
 
 export default { commentOnNewsArticle };
