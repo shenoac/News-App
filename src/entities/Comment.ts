@@ -5,6 +5,13 @@ export class Comment {
   @PrimaryGeneratedColumn()
   commentId!: number;
 
+  // define relations
+  @Column()
+  userId!: number;
+
+  @Column()
+  newsId!: number;
+
   @Column({ nullable: false })
   content!: string;
 

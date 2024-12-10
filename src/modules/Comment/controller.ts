@@ -42,6 +42,7 @@ const commentOnNewsArticle = async (req: Request, res: Response) => {
       timeStamp: new Date(timeStamp),
     };
 
+    // check this
     await commentRepository.save(comment);
 
     res.status(201).send({ message: 'Comment added successfully' });
