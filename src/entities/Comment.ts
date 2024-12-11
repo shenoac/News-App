@@ -1,4 +1,6 @@
-import { PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
+import { PrimaryGeneratedColumn, Column, Entity, ManyToOne } from 'typeorm';
+import { User } from './User.js';
+import { News } from './News.js';
 
 @Entity('comments')
 export class Comment {
@@ -6,11 +8,11 @@ export class Comment {
   commentId!: number;
 
   // define relations
-  @Column()
-  userId!: number;
+  @ManyToOne(() => User)
+  user!: User;
 
-  @Column()
-  newsId!: number;
+  @ManyToOne(() => News)
+  news!: News;
 
   @Column({ nullable: false })
   content!: string;
