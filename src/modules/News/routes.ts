@@ -24,4 +24,16 @@ router.get(
   newsController.getTopHeadlines,
 );
 
+router.get(
+  '/sources',
+  validateRequest(newsValidationSchemas.sources),
+  newsController.getSources,
+);
+
+router.get(
+  '/search',
+  validateRequest(newsValidationSchemas.searchResults),
+  newsController.getSearchResults,
+);
+
 export default router;
