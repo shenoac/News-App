@@ -13,9 +13,9 @@ export class Comment {
   @ManyToOne(() => News)
   news!: News;
 
-  @Column()
+  @Column({ type: 'varchar' })
   content!: string;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({ type: 'date', nullable: true })
   timeStamp?: Date | null;
 }
