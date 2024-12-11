@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 
 import { configs } from './env.js';
-import { User } from '../entities/User.js';
+import entities from '../entities/index.js';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -11,9 +11,9 @@ export const AppDataSource = new DataSource({
   username: configs.database.POSTGRES_USER,
   password: configs.database.POSTGRES_PASSWORD,
   database: configs.database.POSTGRES_DB,
-  entities: [User],
   synchronize: true,
   logging: true,
+  entities,
 });
 
 export const connectDB = async () => {
