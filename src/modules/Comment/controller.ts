@@ -1,5 +1,4 @@
 import type { Request, Response } from 'express';
-import type { CommentType } from '../../types/types.js';
 import { AppDataSource } from '../../config/database.js';
 import { News } from '../../entities/News.js';
 import { Comment } from '../../entities/Comment.js';
@@ -8,15 +7,14 @@ const commentRepository = AppDataSource.getRepository(Comment);
 const newsRepository = AppDataSource.getRepository(News);
 
 const commentOnNewsArticle = async (req: Request, res: Response) => {
-  const userId = req.user?.id;
-  const { newsId } = req.query;
-  const { content, timeStamp } = req.body;
+  const { user } = req;
+  const { title, description, source, url, publishedAt, content, timeStamp } =
+    req.body;
 
-  if (!newsId || typeof newsId !== 'string') {
-    res.status(400).send({ message: 'Invalid newsId' });
-    return;
-  }
-  if (!userId || typeof userId !== 'string') {
+  console.log('Request body:', req.body);
+  console.log('Content:', content);
+
+  if (!user) {
     res.status(401).send({ message: 'Unauthorized' });
     return;
   }
@@ -26,25 +24,32 @@ const commentOnNewsArticle = async (req: Request, res: Response) => {
   }
 
   try {
-    const parsedId = parseInt(newsId);
-    const newsArticle = await newsRepository.findOneBy({ newsId: parsedId });
+    let newsArticle = await newsRepository.findOneBy({ url });
 
     if (!newsArticle) {
-      res.status(404).send({ message: 'News article not found' });
-      return;
+      newsArticle = newsRepository.create({
+        url,
+        publishedAt,
+        source,
+        description,
+        title,
+      });
+      await newsRepository.save(newsArticle);
     }
 
-    const comment: CommentType = {
-      id: `${newsId}-${Date.now()}`,
-      userId,
-      newsId,
+    const comment = commentRepository.create({
       content,
-      timeStamp: new Date(timeStamp),
-    };
+      timeStamp: timeStamp ? new Date(timeStamp) : null,
+      user,
+      news: newsArticle,
+    });
 
     await commentRepository.save(comment);
 
-    res.status(201).send({ message: 'Comment added successfully' });
+    res.status(201).send({
+      content: comment.content,
+      message: 'Comment added successfully',
+    });
   } catch (err: any) {
     res.status(500).send({
       message: 'Error in commenting on the news article',

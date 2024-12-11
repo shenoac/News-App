@@ -16,6 +16,6 @@ export class Comment {
   @Column({ nullable: false })
   content!: string;
 
-  @Column()
-  timeStamp!: Date;
+  @Column({ type: 'timestamp', nullable: true })
+  timeStamp?: Date | null;
 }

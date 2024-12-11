@@ -15,11 +15,3 @@ export interface IArticles {
   publishedAt: string;
   content: string;
 }
-
-export interface CommentType {
-  id: string;
-  userId: string;
-  newsId: string;
-  content: string;
-  timeStamp: Date;
-}
