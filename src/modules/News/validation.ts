@@ -45,15 +45,7 @@ const sources = {
     language: Joi.string().length(2).optional(),
     country: Joi.string().length(2).optional(),
     category: Joi.string()
-      .valid(
-        'business',
-        'entertainment',
-        'general',
-        'health',
-        'science',
-        'sports',
-        'technology',
-      )
+      .valid(...categories)
       .optional(),
   }),
 };
