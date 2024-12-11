@@ -19,7 +19,6 @@ const commentOnNewsArticle = async (req: Request, res: Response) => {
     res.status(400).send({ message: 'Comment content is required' });
     return;
   }
-
   try {
     let newsArticle = await newsRepository.findOneBy({ url });
 
