@@ -17,7 +17,7 @@ const authMiddleWare = async (
   }
   try {
     if (!configs.auth.JWT_SECRET) {
-      throw new Error('Error in verifing the token');
+      throw new Error('Error in verifying the token');
     }
 
     const decode = jwt.verify(token, configs.auth.JWT_SECRET) as { id: number };
@@ -39,7 +39,6 @@ const authMiddleWare = async (
         return;
       }
     }
-    console.log(error);
     res.status(500).send({ message: 'A Server Error occured', error });
     return;
   }

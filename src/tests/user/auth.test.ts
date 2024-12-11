@@ -48,7 +48,7 @@ beforeAll(async () => {
   }
 
   if (!configs.auth.JWT_SECRET) {
-    throw new Error('Error in verifing the token');
+    throw new Error('Error in verifying the token');
   }
 
   const loggedUser = await request(app)

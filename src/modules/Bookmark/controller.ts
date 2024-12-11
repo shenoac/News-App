@@ -20,13 +20,13 @@ const createBookmark = async (req: Request, res: Response) => {
       });
       await newsRepository.save(news);
     }
-    const exsistingBookmark = await bookmarkRepository.findOne({
+    const existingBookmark = await bookmarkRepository.findOne({
       where: {
         news: { newsId: news.newsId },
         user: { id: user?.id },
       },
     });
-    if (exsistingBookmark) {
+    if (existingBookmark) {
       res.status(400).send({ message: 'Article already bookmarked.' });
       return;
     }
