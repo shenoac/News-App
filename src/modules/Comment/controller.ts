@@ -11,9 +11,6 @@ const commentOnNewsArticle = async (req: Request, res: Response) => {
   const { title, description, source, url, publishedAt, content, timeStamp } =
     req.body;
 
-  console.log('Request body:', req.body);
-  console.log('Content:', content);
-
   if (!user) {
     res.status(401).send({ message: 'Unauthorized' });
     return;

@@ -7,7 +7,7 @@ const comments = {
     source: Joi.string().required(),
     url: Joi.string().required(),
     publishedAt: Joi.string().required(),
-    content: Joi.string().required(),
+    content: Joi.string().required().min(2),
   }),
 };
 

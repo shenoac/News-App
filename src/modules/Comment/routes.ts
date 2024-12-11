@@ -4,7 +4,7 @@ import commentsController from '../Comment/controller.js';
 import { validateRequest } from '../../middleware/validateRequest.js';
 import commentsValidationSchema from './validation.js';
 
-const router = Router({ mergeParams: true });
+const router = Router();
 
 router.post(
   '/',
