@@ -13,7 +13,7 @@ export class Comment {
   @ManyToOne(() => News)
   news!: News;
 
-  @Column({ nullable: false })
+  @Column()
   content!: string;
 
   @Column({ type: 'timestamp', nullable: true })
