@@ -11,19 +11,19 @@ export class News {
   @PrimaryGeneratedColumn()
   newsId!: number;
 
-  @Column()
+  @Column({ type: 'varchar' })
   title!: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   description!: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   source!: string;
 
-  @Column({ unique: true, nullable: false })
+  @Column({ type: 'varchar', unique: true, nullable: false })
   url!: string;
 
-  @Column()
+  @Column({ type: 'date' })
   publishedAt!: Date;
 
   @CreateDateColumn()
