@@ -1,4 +1,5 @@
 import Joi from 'joi';
+
 const comments = {
   body: Joi.object({
     title: Joi.string().required(),
