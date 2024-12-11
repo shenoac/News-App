@@ -7,7 +7,6 @@ export class Comment {
   @PrimaryGeneratedColumn()
   commentId!: number;
 
-  // define relations
   @ManyToOne(() => User)
   user!: User;
 
