@@ -2,23 +2,19 @@ import type { Request, Response } from 'express';
 import { AppDataSource } from '../../config/database.js';
 import { News } from '../../entities/News.js';
 import { Comment } from '../../entities/Comment.js';
+import type { User } from '../../entities/User.js';
 
 const commentRepository = AppDataSource.getRepository(Comment);
 const newsRepository = AppDataSource.getRepository(News);
 
 const commentOnNewsArticle = async (req: Request, res: Response) => {
-  const { user } = req;
-  const { title, description, source, url, publishedAt, content, timeStamp } =
-    req.body;
+  const userId = req.user?.id;
+  const { title, description, source, url, publishedAt, content } = req.body;
 
-  if (!user) {
-    res.status(401).send({ message: 'Unauthorized' });
-    return;
-  }
-  if (!content || typeof content !== 'string' || content.length === 0) {
-    res.status(400).send({ message: 'Comment content is required' });
-    return;
-  }
+  // if (!content || typeof content !== 'string' || content.length === 0) {
+  //   res.status(400).send({ message: 'Comment content is required' });
+  //   return;
+  // }
 
   try {
     let newsArticle = await newsRepository.findOneBy({ url });
@@ -36,21 +32,20 @@ const commentOnNewsArticle = async (req: Request, res: Response) => {
 
     const comment = commentRepository.create({
       content,
-      timeStamp: timeStamp ? new Date(timeStamp) : null,
-      user,
-      news: newsArticle,
+      user: { id: userId } as User,
+      news: { newsId: newsArticle.newsId } as News,
     });
 
     await commentRepository.save(comment);
 
     res.status(201).send({
-      content: comment.content,
+      content: comment,
       message: 'Comment added successfully',
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     res.status(500).send({
       message: 'Error in commenting on the news article',
-      error: err.message,
+      error: (err as Error).message,
     });
   }
 };
