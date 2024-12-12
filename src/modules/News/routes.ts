@@ -32,6 +32,7 @@ router.get(
 
 router.get(
   '/search',
+  authMiddleWare,
   validateRequest(newsValidationSchemas.searchResults),
   newsController.getSearchResults,
 );

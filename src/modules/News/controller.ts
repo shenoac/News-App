@@ -87,9 +87,10 @@ const getSources = async (req: Request, res: Response) => {
       country,
       category,
     });
-    res.status(200).send(sources.sources);
   } catch (error) {
-    res.status(500).send({ message: 'Error in getting News Sources', error });
+    res
+    .status(500)
+    .send({ message: 'Error in fetching source results', error,});
   }
 };
 
@@ -106,10 +107,9 @@ const getSearchResults = async (req: Request, res: Response) => {
 
     res.status(200).send(articles.articles);
   } catch (error) {
-    res.status(500).send({
-      message: 'Error in fetching search results',
-      error,
-    });
+    res
+    .status(500)
+    .send({ message: 'Error in fetching search results', error,});
   }
 };
 
