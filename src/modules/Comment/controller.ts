@@ -11,11 +11,6 @@ const commentOnNewsArticle = async (req: Request, res: Response) => {
   const userId = req.user?.id;
   const { title, description, source, url, publishedAt, content } = req.body;
 
-  // if (!content || typeof content !== 'string' || content.length === 0) {
-  //   res.status(400).send({ message: 'Comment content is required' });
-  //   return;
-  // }
-
   try {
     let newsArticle = await newsRepository.findOneBy({ url });
 
