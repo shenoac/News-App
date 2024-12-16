@@ -1,6 +1,10 @@
 import request from 'supertest';
 import app from '../../index';
 
+jest.mock('../../middleware/auth.ts', () =>
+  jest.fn((req, res, next) => next()),
+);
+
 const getSearchResultsUrl = '/api/news/search';
 
 describe('GET /api/news/search', () => {
@@ -74,11 +78,13 @@ describe('GET /api/news/search', () => {
     });
 
     it('should filter articles by date range', async () => {
+      console.log('STARTING HERE');
       const fromDate = '2024-11-09';
-      const toDate = '2024-11-20';
+      const toDate = '2024-11-15';
       const response = await request(app)
         .get(getSearchResultsUrl)
-        .query({ q: 'test', from: fromDate, to: toDate });
+        .query({ q: 'elon', from: fromDate, to: toDate, sortBy: 'publishedAt' });
+        console.log('RESPONSE FROM TEST: ', response.body)
 
       expect(response.status).toBe(200);
       expect(Array.isArray(response.body)).toBe(true);
