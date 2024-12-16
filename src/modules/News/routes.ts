@@ -26,6 +26,7 @@ router.get(
 
 router.get(
   '/single',
+  authMiddleWare,
   validateRequest(newsValidationSchemas.fetchSingleArticle),
   newsController.fetchSingleArticle,
 );

@@ -3,9 +3,10 @@ import { News } from '../../entities/News.js';
 import { AppDataSource } from '../../config/database.js';
 import { Bookmark } from '../../entities/Bookmark.js';
 
+const bookmarkRepository = AppDataSource.getRepository(Bookmark);
+
 const createBookmark = async (req: Request, res: Response) => {
   const newsRepository = AppDataSource.getRepository(News);
-  const bookmarkRepository = AppDataSource.getRepository(Bookmark);
   const { title, description, source, url, publishedAt } = req.body;
   const { user } = req;
   try {
@@ -52,10 +53,8 @@ const getBookmarkedArticle = async (
     const id = parseInt(bookmarkId, 10);
     if (isNaN(id)) {
       res.status(400).send({ message: 'Invalid bookmark ID.' });
-      return;
     }
 
-    const bookmarkRepository = AppDataSource.getRepository(Bookmark);
     const bookmark = await bookmarkRepository.findOne({
       where: { bookmarkId: id },
       relations: ['news'],
